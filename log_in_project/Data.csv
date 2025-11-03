@@ -1,0 +1,9 @@
+{
+  username: "user123",
+  password_hash: "<bcrypt_hash>",
+  encrypted_data: {
+    full_name: "<encrypted>",
+    email: "<encrypted>",
+    phone: "<encrypted>"
+  }
+}
