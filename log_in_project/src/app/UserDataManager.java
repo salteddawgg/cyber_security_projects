@@ -27,4 +27,26 @@ public class UserDataManager {
         }
         return null;
     }
+
+    public static void updateUserPassword(String username, String newHashedPassword) throws IOException {
+        File file = new File(DATA_FILE);
+        File tempFile = new File(DATA_FILE + ".tmp");
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file));
+             BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                User user = User.fromCSV(line);
+                if (user != null && user.getUsername().equals(username)) {
+                    user.setHashedPassword(newHashedPassword);
+                    bw.write(user.toCSV());
+                } else {
+                    bw.write(line);
+                }
+                bw.newLine();
+            }
+        }
+        file.delete();
+        tempFile.renameTo(file);
+    }
 }
